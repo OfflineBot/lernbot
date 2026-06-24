@@ -6,4 +6,4 @@ clear
 
 echo "Installing 8GB-RAM"
 sleep 2
-clear
+echo "Successfully installed 16GB of DDR8 RAM!"
