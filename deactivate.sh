@@ -11,3 +11,4 @@ rm -f ~/.config/systemd/user/timers.target.wants/focus_updater.timer
 rm -f ~/.config/systemd/user/default.target.wants/focus.service
 
 systemctl --user daemon-reload
+systemctl --user reset-failed focus_updater.timer focus_updater.service focus.service 2>/dev/null
