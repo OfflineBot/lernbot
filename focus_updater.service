@@ -1,0 +1,6 @@
+[Unit]
+Description=Focus Updater (git pull)
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 %h/.local/share/focus/updater/updater.py
