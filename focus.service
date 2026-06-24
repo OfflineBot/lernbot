@@ -1,0 +1,10 @@
+[Unit]
+Description=Focus Lern-Daemon
+
+[Service]
+ExecStart=/usr/bin/python3 %h/.local/share/focus/focus.py
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=default.target
