@@ -1,3 +1,7 @@
+# active=true  -> Daemon aktiv (schliesst Nicht-Whitelist-Tabs)
+# active=false -> Daemon komplett aus (schliesst nichts)
+active=true
+
 # Focus-Whitelist: NUR Tabs, deren URL eine dieser Zeilen als Teilstring
 # enthaelt (Gross-/Kleinschreibung egal), bleiben offen. Alles andere wird
 # alle 5 Minuten geschlossen.

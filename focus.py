@@ -132,16 +132,29 @@ def session_path(profile: Path) -> Path | None:
 # --------------------------------------------------------------------------- #
 # Whitelist                                                                    #
 # --------------------------------------------------------------------------- #
-def load_whitelist() -> list[str]:
+def load_config() -> tuple[bool, list[str]]:
+    """Liest whitelist.txt. Gibt (aktiv, muster) zurueck.
+
+    Eine Zeile 'active=false' (irgendwo, Gross-/Kleinschreibung egal) schaltet
+    den Daemon komplett ab - dann werden keine Tabs geschlossen. Fehlt die
+    Zeile oder steht sie auf true/1/yes/on, ist der Daemon aktiv.
+    """
+    active = True
     pats = []
     try:
         for line in WHITELIST_FILE.read_text().splitlines():
             line = line.strip()
-            if line and not line.startswith("#"):
-                pats.append(line.lower())
+            if not line or line.startswith("#"):
+                continue
+            key = line.split("=", 1)[0].strip().lower()
+            if key == "active":
+                val = line.split("=", 1)[1].strip().lower() if "=" in line else ""
+                active = val in ("1", "true", "yes", "on", "")
+                continue
+            pats.append(line.lower())
     except FileNotFoundError:
         pass
-    return pats
+    return active, pats
 
 
 def current_url(tab: dict) -> str:
@@ -309,6 +322,11 @@ def run_once() -> None:
     if not profile:
         log("kein Firefox-Profil gefunden")
         return
+    active, patterns = load_config()
+    if not active:
+        log("deaktiviert (active=false) - keine Aktion")
+        return
+
     sp = session_path(profile)
     if not sp:
         log("keine Session-Datei (Firefox lief noch nie?)")
@@ -319,7 +337,6 @@ def run_once() -> None:
         log(f"Session nicht lesbar: {e}")
         return
 
-    patterns = load_whitelist()
     bad = forbidden_urls(data, patterns)
     if not bad:
         log("ok - keine verbotenen Tabs")
