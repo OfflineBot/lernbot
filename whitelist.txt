@@ -1,0 +1,16 @@
+# Focus-Whitelist: NUR Tabs, deren URL eine dieser Zeilen als Teilstring
+# enthaelt (Gross-/Kleinschreibung egal), bleiben offen. Alles andere wird
+# alle 5 Minuten geschlossen.
+#
+# - eine Domain / ein Stichwort pro Zeile
+# - Zeilen mit # sind Kommentare, Leerzeilen werden ignoriert
+# - leere Tabs (about:newtab / about:blank) bleiben immer offen
+# - Aenderungen greifen automatisch beim naechsten Durchlauf (kein Neustart noetig)
+#   bzw. nach 'git push' auch auf dem zweiten PC
+#
+# Beispiel fuer einen einzelnen YouTube-Kanal statt ganz YouTube:
+#   youtube.com/@MeinLernKanal
+
+youtube.com
+claude.ai
+wikipedia.org

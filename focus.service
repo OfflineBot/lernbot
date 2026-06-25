@@ -5,6 +5,9 @@ Description=Focus Lern-Daemon
 ExecStart=/usr/bin/python3 %h/.local/share/focus/focus.py
 Restart=always
 RestartSec=3
+# Nur den Daemon selbst beenden - ein von focus.py neu gestartetes Firefox
+# soll einen Service-Neustart (z.B. durch den Updater) ueberleben.
+KillMode=process
 
 [Install]
 WantedBy=default.target
